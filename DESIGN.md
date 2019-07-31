@@ -43,6 +43,7 @@ that are understood by the search schema.
 
 This returns a row/column search result as described above. The search could include paging offets and limits.
 
+### Execute an advanced search
 
 POST /advancedsearch/SEARCHID
 
