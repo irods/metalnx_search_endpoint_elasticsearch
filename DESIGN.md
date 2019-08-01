@@ -12,6 +12,12 @@ in a standard row format that can be used in a 'virtual collection' style listen
 can include add'l metadata beyond the collection/file name/size/create date/modify date in an additional info addendum to the row.
 
 
+## Links and Dev Notes
+
+* JWT example for Flask - https://github.com/zalando/connexion/tree/master/examples/openapi3/jwt
+
+## Operations
+
 A search plugin is a REST API that conforms to 
 this Swagger API definition. The REST API performs the following function:
 
