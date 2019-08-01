@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Data Grid Search API
+  description: This is and extensible, pluggable search API for iRODS focused on pluggable
+    Elastic Search indexes.
+  contact:
+    email: mike.conway@nih.gov
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0-oas3
+servers:
+- url: http://localhost:8080/v1
+  description: Local dev server
+tags:
+- name: Info
+  description: Endpoints for describing search capabilities and options
+- name: Search
+  description: Generic search on indexes
+paths:
+  /indexes:
+    get:
+      tags:
+      - Info
+      summary: Find index types supported by this api
+      description: Returns a summary list of the search indexes available at this
+        endpoint
+      operationId: get_indexes
+      parameters: []
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/indexes'
+        x-swagger-router-controller: swagger_server.controllers.index_controller
+      x-openapi-router-controller: swagger_server.controllers.info_controller
+components:
+  schemas:
+    indexes:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique id that identifies this particular endpoint. Multiple
+            endpoints may be configured to create a search cluster to address distinct
+            indexes
+        name:
+          type: string
+          description: Human readable, meaningful name for the search endpoint
+        info:
+          type: string
+          description: Documentation about the function of the endpoint
+        maintainer:
+          type: string
+          description: Maintainer of the api
+        contact_email:
+          type: string
+          description: email address of a support contact
+          format: email
+        indexes:
+          type: array
+          description: individually addressable indexes supported by this endpoint
+          items:
+            $ref: '#/components/schemas/indexes_indexes'
+      example:
+        indexes:
+        - name: name
+          id: id
+          version: version
+          info: info
+        - name: name
+          id: id
+          version: version
+          info: info
+        name: name
+        id: id
+        maintainer: maintainer
+        info: info
+        contact_email: ""
+    index:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this index type
+        name:
+          type: string
+          description: Display name for this index type
+        info:
+          type: string
+          description: Documentation about this particular index type
+        attributes:
+          type: array
+          description: array of possible search attributes that can be used to support
+            textual advanced search flags as well as query builder interfaces attribute-by-attribute
+          items:
+            properties:
+              attrib_name:
+                type: string
+                description: attribute name as defined in the base search schema
+              attrib_type:
+                type: string
+                description: cue for the type of search attribute in the underlying
+                  schema
+                enum:
+                - date
+                - string
+                - int
+                - float
+                - boolean
+              info:
+                type: string
+                description: Documentation about the use of the given search type
+              shortcut_text:
+                type: string
+                description: Text shortcut suitable for use in free text advanced
+                  search operations, such that Author:XXXX would cause a specific
+                  search on the author information in the target index, if not specified
+                  it defaults to the attrib_name
+    indexes_indexes:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this index type
+        name:
+          type: string
+          description: Display name for this index type
+        info:
+          type: string
+          description: Documentation about this particular index type
+        version:
+          type: string
+          description: Version identifier for this endpoint, preferably in semantic
+            versioning style
+      example:
+        name: name
+        id: id
+        version: version
+        info: info
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_BearerAuth
+
