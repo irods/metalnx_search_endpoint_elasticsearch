@@ -34,6 +34,11 @@ paths:
                     $ref: "#/components/schemas/indexes"
         x-swagger-router-controller: "swagger_server.controllers.index_controller"
 components:
+  securitySchemes:
+        BearerAuth:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT 
   schemas:
     indexes:
       type: "object"
