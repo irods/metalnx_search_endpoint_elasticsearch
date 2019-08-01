@@ -1,0 +1,79 @@
+---
+swagger: "2.0"
+info:
+  description: "This is and extensible, pluggable search API for iRODS focused on pluggable Elastic Search indexes."
+  version: "1.0.0"
+  title: "Data Grid Search API"
+  contact:
+    email: "mike.conway@nih.gov"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/v1"
+tags:
+- name: "Info"
+  description: "Endpoints for describing search capabilities and options"
+- name: "Search"
+  description: "Generic search on indexes"
+schemes:
+- "https"
+- "http"
+paths:
+  /indexes:
+    get:
+      tags:
+      - "Info"
+      summary: "Find index types supported by this api"
+      description: "Returns a summary list of the search indexes available at this endpoint"
+      operationId: "get_indexes"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successfully retrieved"
+          schema:
+            $ref: "#/definitions/indexes"
+      x-swagger-router-controller: "swagger_server.controllers.index_controller"
+definitions:
+  indexes:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique id that identifies this particular endpoint. Multiple endpoints may be configured to create a search cluster to address distinct indexes"
+      name: 
+        type: "string"
+        description: "Human readable, meaningful name for the search endpoint"
+      info:
+        type: "string"
+        description: "Documentation about the function of the endpoint"  
+      maintainer:
+        type: "string"
+        description: "Maintainer of the api"
+      contact_email:
+        type: "string"
+        description: "email address of a support contact"  
+        format: "email"
+      indexes:
+        type: "array"
+        description: "individually addressable indexes supported by this endpoint"
+        items:
+          $ref: "#/definitions/index"
+      version:
+        type: "string"
+        description: "Version identifier for this endpoint, preferably in semantic versioning style"
+  index:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier for this index type"
+      name:
+        type: "string"
+        description: "Display name for this index type"
+      info:
+        type: "string"
+        description: "Documentation about this particular index type"
+      
+      
