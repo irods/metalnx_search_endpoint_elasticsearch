@@ -32,7 +32,6 @@ paths:
               application/json:
                 schema:
                     $ref: "#/components/schemas/indexes"
-        x-swagger-router-controller: "swagger_server.controllers.index_controller"
 components:
   securitySchemes:
         BearerAuth:
@@ -63,20 +62,22 @@ components:
           type: "array"
           description: "individually addressable indexes supported by this endpoint"
           items:
-            type: object
-            properties:
-              id:
-                type: "string"
-                description: "Unique identifier for this index type"
-              name:
-                type: "string"
-                description: "Display name for this index type"
-              info:
-                type: "string"
-                description: "Documentation about this particular index type"
-              version:
-                type: "string"
-                description: "Version identifier for this endpoint, preferably in semantic versioning style"
+            $ref: "#/components/schemas/index-schema-description"
+    index-schema-description:
+      type: object
+      properties:
+        id:
+          type: "string"
+          description: "Unique identifier for this index type"
+        name:
+          type: "string"
+          description: "Display name for this index type"
+        info:
+          type: "string"
+          description: "Documentation about this particular index type"
+        version:
+          type: "string"
+          description: "Version identifier for this endpoint, preferably in semantic versioning style"
     index:
       type: "object"
       properties:

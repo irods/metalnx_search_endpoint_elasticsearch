@@ -6,17 +6,17 @@ import connexion
 import six
 
 """
-controller generated to handled auth operation described at:
+util to to handle auth operation described at:
 https://connexion.readthedocs.io/en/latest/security.html
 """
 
-JWT_ISSUER = 'gov.nih.niehs'
+JWT_ISSUER = 'com.zalando.connexion'
 JWT_SECRET = 'change_this'
 JWT_LIFETIME_SECONDS = 600
 JWT_ALGORITHM = 'HS256'
 
 
-def check_BearerAuth(token):
+def check_bearer_auth(token):
     try:
         return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
     except JWTError as e:

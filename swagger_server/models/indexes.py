@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.indexes_indexes import IndexesIndexes  # noqa: F401,E501
+from swagger_server.models.index_schema_description import IndexSchemaDescription  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,7 +15,7 @@ class Indexes(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, info: str=None, maintainer: str=None, contact_email: str=None, indexes: List[IndexesIndexes]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, info: str=None, maintainer: str=None, contact_email: str=None, indexes: List[IndexSchemaDescription]=None):  # noqa: E501
         """Indexes - a model defined in Swagger
 
         :param id: The id of this Indexes.  # noqa: E501
@@ -29,7 +29,7 @@ class Indexes(Model):
         :param contact_email: The contact_email of this Indexes.  # noqa: E501
         :type contact_email: str
         :param indexes: The indexes of this Indexes.  # noqa: E501
-        :type indexes: List[IndexesIndexes]
+        :type indexes: List[IndexSchemaDescription]
         """
         self.swagger_types = {
             'id': str,
@@ -37,7 +37,7 @@ class Indexes(Model):
             'info': str,
             'maintainer': str,
             'contact_email': str,
-            'indexes': List[IndexesIndexes]
+            'indexes': List[IndexSchemaDescription]
         }
 
         self.attribute_map = {
@@ -182,24 +182,24 @@ class Indexes(Model):
         self._contact_email = contact_email
 
     @property
-    def indexes(self) -> List[IndexesIndexes]:
+    def indexes(self) -> List[IndexSchemaDescription]:
         """Gets the indexes of this Indexes.
 
         individually addressable indexes supported by this endpoint  # noqa: E501
 
         :return: The indexes of this Indexes.
-        :rtype: List[IndexesIndexes]
+        :rtype: List[IndexSchemaDescription]
         """
         return self._indexes
 
     @indexes.setter
-    def indexes(self, indexes: List[IndexesIndexes]):
+    def indexes(self, indexes: List[IndexSchemaDescription]):
         """Sets the indexes of this Indexes.
 
         individually addressable indexes supported by this endpoint  # noqa: E501
 
         :param indexes: The indexes of this Indexes.
-        :type indexes: List[IndexesIndexes]
+        :type indexes: List[IndexSchemaDescription]
         """
 
         self._indexes = indexes

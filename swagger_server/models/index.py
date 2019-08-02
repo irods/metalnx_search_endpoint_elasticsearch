@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.object import Object  # noqa: F401,E501
+from swagger_server.models.index_schema_description import IndexSchemaDescription  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,7 +15,7 @@ class Index(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, info: str=None, attributes: List[Object]=None):  # noqa: E501
+    def __init__(self, id: str=None, name: str=None, info: str=None, attributes: List[IndexSchemaDescription]=None):  # noqa: E501
         """Index - a model defined in Swagger
 
         :param id: The id of this Index.  # noqa: E501
@@ -31,7 +31,7 @@ class Index(Model):
             'id': str,
             'name': str,
             'info': str,
-            'attributes': List[Object]
+            'attributes': List[IndexSchemaDescription]
         }
 
         self.attribute_map = {
@@ -126,7 +126,7 @@ class Index(Model):
         self._info = info
 
     @property
-    def attributes(self) -> List[Object]:
+    def attributes(self) -> List[IndexSchemaDescription]:
         """Gets the attributes of this Index.
 
         array of possible search attributes that can be used to support textual advanced search flags as well as query builder interfaces attribute-by-attribute  # noqa: E501
@@ -137,7 +137,7 @@ class Index(Model):
         return self._attributes
 
     @attributes.setter
-    def attributes(self, attributes: List[Object]):
+    def attributes(self, attributes: List[IndexSchemaDescription]):
         """Sets the attributes of this Index.
 
         array of possible search attributes that can be used to support textual advanced search flags as well as query builder interfaces attribute-by-attribute  # noqa: E501
