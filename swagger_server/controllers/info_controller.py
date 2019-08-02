@@ -1,6 +1,7 @@
 import connexion
 import six
 
+from grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter
 from swagger_server.models.indexes import Indexes  # noqa: E501
 from swagger_server import util
 
@@ -13,4 +14,6 @@ def get_indexes():  # noqa: E501
 
     :rtype: Indexes
     """
-    return 'do some magic!'
+
+    adapter = EpigenomicsSearchAdapter()
+    return adapter.describe_index()
