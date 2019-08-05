@@ -12,6 +12,10 @@ info:
 servers:
 - url: http://localhost:8080/v1
   description: Local dev server
+security:
+- BearerAuth:
+  - read
+  - write
 tags:
 - name: Info
   description: Endpoints for describing search capabilities and options
