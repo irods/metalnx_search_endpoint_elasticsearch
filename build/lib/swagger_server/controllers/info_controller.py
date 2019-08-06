@@ -30,5 +30,4 @@ def get_index_search_attributes(index_name):  # noqa: E501
 
     :rtype: SearchAttributes
     """
-    adapter = EpigenomicsSearchAdapter()
-    return adapter.search_attributes(index_name)
+    return 'do some magic!'

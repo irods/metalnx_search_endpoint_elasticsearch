@@ -1,4 +1,4 @@
-from swagger_server.models import Indexes, IndexSearchAttributes, SearchAttributes
+from swagger_server.models import SearchAttributes, Indexes
 
 
 class EpigenomicsSearchAdapter:
@@ -18,7 +18,7 @@ class EpigenomicsSearchAdapter:
         :return: index
         """
 
-        index_search = Indexes()
+        index_search = SearchAttributes()
         index_search.id ="niehs-epigenomics"
         index_search.name = "Epigenomics ElasticSearch Indexes"
         index_search.info ="NIEHS Data Commons search for Epigenomics data via project and sample information"
@@ -42,32 +42,3 @@ class EpigenomicsSearchAdapter:
         index_search.attributes = indexes
 
         return index_search
-
-    def search_attributes(self, index_name):
-        """
-        Parse index attribute and an particular index
-        :return: searchAttributes
-        """
-        result = SearchAttributes()
-        result.id = 'epi_projects'
-        result.info = 'Projects indexed from Epigenomics core'
-        result.name = index_name
-        result.attributes = []
-
-        attribute_entry = IndexSearchAttributes(
-            attrib_name='Hypothesis',
-            attrib_type='String',
-            info='Descriptive hypothesis of the porject submitted by researcher',
-            shortcut_text='hyp'
-        )
-        result.attributes.append(attribute_entry)
-
-        attribute_entry = IndexSearchAttributes(
-            attrib_name='Title',
-            attrib_type='String',
-            info='Descriptive title of the project submitted by researcher',
-            shortcut_text='hyp'
-        )
-        result.attributes.append(attribute_entry)
-
-        return result
