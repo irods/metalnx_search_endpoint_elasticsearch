@@ -11,9 +11,9 @@ https://connexion.readthedocs.io/en/latest/security.html
 """
 
 JWT_ISSUER = 'gov.nih.niehs'
-JWT_SECRET = 'change_this'
+JWT_SECRET = 'thisisasecretthatisverysecretyouwillneverguessthiskey'
 JWT_LIFETIME_SECONDS = 600
-JWT_ALGORITHM = 'HS256'
+JWT_ALGORITHM = 'HS384'
 
 
 def check_BearerAuth(token):

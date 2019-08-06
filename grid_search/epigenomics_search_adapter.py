@@ -1,5 +1,7 @@
 from swagger_server.models import Indexes, IndexSearchAttributes, SearchAttributes
 
+class NotFoundError(Exception):
+        pass
 
 class EpigenomicsSearchAdapter:
     """Supports Epigenomics core Elastic search functions provided to the standard API"""
@@ -39,35 +41,60 @@ class EpigenomicsSearchAdapter:
         index_entry.contact_email = "mike.conway@nih.gov"
         indexes.append(index_entry)
 
-        index_search.attributes = indexes
+        index_search.indexes = indexes
 
         return index_search
 
-    def search_attributes(self, index_name):
+    def search_attributes(self, index_id):
         """
         Parse index attribute and an particular index
         :return: searchAttributes
         """
-        result = SearchAttributes()
-        result.id = 'epi_projects'
-        result.info = 'Projects indexed from Epigenomics core'
-        result.name = index_name
-        result.attributes = []
 
-        attribute_entry = IndexSearchAttributes(
-            attrib_name='Hypothesis',
-            attrib_type='String',
-            info='Descriptive hypothesis of the porject submitted by researcher',
-            shortcut_text='hyp'
-        )
-        result.attributes.append(attribute_entry)
 
-        attribute_entry = IndexSearchAttributes(
-            attrib_name='Title',
-            attrib_type='String',
-            info='Descriptive title of the project submitted by researcher',
-            shortcut_text='hyp'
-        )
-        result.attributes.append(attribute_entry)
+        if index_id == 'EpigenomicsProjects':
 
-        return result
+            result = SearchAttributes()
+            result.id = 'EpigenomicsProjects'
+            result.info = 'Projects indexed from Epigenomics core'
+            result.name = 'Epigenomics Projects'
+            result.attributes = []
+
+            attribute_entry = IndexSearchAttributes(
+                attrib_name='Hypothesis',
+                attrib_type='String',
+                info='Descriptive hypothesis of the porject submitted by researcher',
+                shortcut_text='hyp'
+            )
+            result.attributes.append(attribute_entry)
+
+            attribute_entry = IndexSearchAttributes(
+                attrib_name='Title',
+                attrib_type='String',
+                info='Descriptive title of the project submitted by researcher',
+                shortcut_text='hyp'
+            )
+            result.attributes.append(attribute_entry)
+            return result
+
+        elif index_id == 'EpigenomicsSamplesandRuns':
+
+            result = SearchAttributes()
+            result.id = 'EpigenomicsSamplesandRuns'
+            result.info = 'Samples and runs indexed from Epigenomics core'
+            result.name = 'Epigenomics Samples and Runs'
+            result.attributes = []
+
+            attribute_entry = IndexSearchAttributes(
+                attrib_name='Run Id',
+                attrib_type='String',
+                info='Run Id assigned in the sample sheet',
+                shortcut_text='runid'
+            )
+            result.attributes.append(attribute_entry)
+            return result
+
+        else:
+            raise NotFoundError
+
+

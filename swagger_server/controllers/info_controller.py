@@ -1,7 +1,8 @@
 import connexion
 import six
+from flask_restful import abort
 
-from grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter
+from grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter, NotFoundError
 from swagger_server.models.indexes import Indexes  # noqa: E501
 from swagger_server.models.search_attributes import SearchAttributes  # noqa: E501
 from swagger_server import util
@@ -31,4 +32,8 @@ def get_index_search_attributes(index_name):  # noqa: E501
     :rtype: SearchAttributes
     """
     adapter = EpigenomicsSearchAdapter()
-    return adapter.search_attributes(index_name)
+
+    try:
+        return adapter.search_attributes(index_name)
+    except NotFoundError:
+        abort(404)
