@@ -14,18 +14,19 @@ class EpigenomicsSearchAdapter:
 
         pass
 
-    def describe_index(self):
+    @staticmethod
+    def describe_index():
         """
         Describe the capabilities of this particular index server
         :return: index
         """
 
         index_search = Indexes()
-        index_search.id ="niehs-epigenomics"
+        index_search.id = "niehs-epigenomics"
         index_search.name = "Epigenomics ElasticSearch Indexes"
-        index_search.info ="NIEHS Data Commons search for Epigenomics data via project and sample information"
+        index_search.info = "NIEHS Data Commons search for Epigenomics data via project and sample information"
         indexes = []
-        index_entry = Indexes();
+        index_entry = Indexes()
         index_entry.id = "EpigenomicsProjects"
         index_entry.name = "Epigenomics Projects"
         index_entry.maintainer = "ODS"
@@ -33,7 +34,7 @@ class EpigenomicsSearchAdapter:
         index_entry.info = "Search of project request information, hypothesis, purpose, etc. " \
                            "as entered during the project approval phase"
         indexes.append(index_entry)
-        index_entry = Indexes();
+        index_entry = Indexes()
         index_entry.id = "EpigenomicsSamplesandRuns"
         index_entry.name = "Epigenomics Samples and Runs"
         index_entry.info = "Search of sequencing runs and samples"
@@ -45,13 +46,12 @@ class EpigenomicsSearchAdapter:
 
         return index_search
 
-    def search_attributes(self, index_id):
+    @staticmethod
+    def search_attributes(index_id):
         """
         Parse index attribute and an particular index
         :return: searchAttributes
         """
-
-
         if index_id == 'EpigenomicsProjects':
 
             result = SearchAttributes()
