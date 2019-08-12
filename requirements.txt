@@ -2,5 +2,6 @@ connexion == 2.2.0
 python_dateutil == 2.6.0
 setuptools >= 21.0.0
 python-jose[cryptography]
+Flask-RESTful==0.3.6
 flask-testing
 connexion[swagger-ui]
