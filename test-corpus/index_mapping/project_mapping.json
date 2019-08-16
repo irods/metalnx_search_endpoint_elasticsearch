@@ -1,0 +1,82 @@
+{
+    "mappings": {
+        "properties": {
+            "url": {
+                "type": "text"
+            },
+            "PIEmail": {
+                "type": "keyword"
+            },
+            "PIID": {
+                "type": "keyword"
+            },
+            "PILab": {
+                "type": "keyword"
+            },
+            "PIName": {
+                "type": "text"
+            },
+            "ASPNumber": {
+                "type": "text"
+            },
+            "IRBNumber": {
+                "type": "text"
+            },
+            "Organism": {
+                "type": "text"
+            },
+            "ProjectID": {
+                "type": "keyword"
+            },
+            "ProjectNumber": {
+                "type": "text"
+            },
+            "ProjectTitle": {
+                "type": "text"
+            },
+            "ProjectType": {
+                "type": "keyword"
+            },
+            "SequencingFacility": {
+                "type": "text"
+            },
+            "RequesterEmail": {
+                "type": "keyword"
+            },
+            "RequesterID": {
+                "type": "keyword"
+            },
+            "RequesterName": {
+                "type": "text"
+            },
+            "Background": {
+                "type": "text"
+            },
+            "Consultation": {
+                "type": "text"
+            },
+            "CostEstimate": {
+                "type": "text"
+            },
+            "DataAnalysisStrategy": {
+                "type": "text"
+            },
+            "EstimatedDate": {
+                "type": "date",
+                "format": "MM/dd/yyyy||epoch_millis"
+            },
+            "Hypothesis": {
+                "type": "text"
+            },
+            "References": {
+                "type": "text"
+            },
+            "Relevance": {
+                "type": "text"
+            },
+            "Validation": {
+                "type": "text"
+            }
+        }
+    }
+}
