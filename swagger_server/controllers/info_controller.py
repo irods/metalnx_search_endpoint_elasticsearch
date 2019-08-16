@@ -1,11 +1,18 @@
-import connexion
-import six
-from flask_restful import abort
+import logging
 
-from grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter, NotFoundError
+from swagger_server.services.grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter
 from swagger_server.models.indexes import Indexes  # noqa: E501
 from swagger_server.models.search_attributes import SearchAttributes  # noqa: E501
-from swagger_server import util
+from swagger_server.services.grid_search.project_index_attributes import ProjectIndexAttributes
+from swagger_server.services.grid_search.sample_index_attributes import SampleIndexAttributes
+from werkzeug.exceptions import BadRequest
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s: %(filename)s:%(funcName)s:%(lineno)d: %(message)s"
+)
+
+logger = logging.getLogger(__name__)
 
 
 def get_indexes():  # noqa: E501
@@ -16,7 +23,7 @@ def get_indexes():  # noqa: E501
 
     :rtype: Indexes
     """
-
+    logger.debug('info_controller: get_indexes()')
     adapter = EpigenomicsSearchAdapter()
     return adapter.describe_index()
 
@@ -31,9 +38,14 @@ def get_index_search_attributes(index_name):  # noqa: E501
 
     :rtype: SearchAttributes
     """
-    adapter = EpigenomicsSearchAdapter()
+    logger.debug('info_controller: get_index_search_attributes()')
+    logger.debug('args: \n index: %s' % index_name)
 
-    try:
-        return adapter.search_attributes(index_name)
-    except NotFoundError:
-        abort(404)
+    if index_name == 'EpigenomicsProjects':
+        search_attributes = ProjectIndexAttributes()
+        return search_attributes.search_attributes()
+    elif index_name == 'EpigenomicsSamples':
+        search_attributes = SampleIndexAttributes()
+        return search_attributes.search_attributes()
+    else:
+        raise BadRequest('Error: Index not found')

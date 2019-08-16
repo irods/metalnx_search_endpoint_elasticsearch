@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 import unittest
-from grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter
+from swagger_server.services.grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter
 
 
 class TestEpigenomicsSearchAdapter(unittest.TestCase):
