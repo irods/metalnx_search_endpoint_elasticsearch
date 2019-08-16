@@ -1,3 +1,0 @@
-[console_scripts]
-swagger_server = swagger_server.__main__:main
-
