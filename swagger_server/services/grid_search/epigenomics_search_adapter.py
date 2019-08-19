@@ -29,7 +29,7 @@ class EpigenomicsSearchAdapter:
         index_search.info = "NIEHS Data Commons search for Epigenomics data via project and sample information"
         indexes = []
         index_entry = Indexes()
-        index_entry.id = "EpigenomicsProjects"
+        index_entry.id = "projects"
         index_entry.name = "Epigenomics Projects"
         index_entry.maintainer = "ODS"
         index_entry.contact_email = "mike.conway@nih.gov"
@@ -37,7 +37,7 @@ class EpigenomicsSearchAdapter:
                            "as entered during the project approval phase"
         indexes.append(index_entry)
         index_entry = Indexes()
-        index_entry.id = "EpigenomicsSamplesandRuns"
+        index_entry.id = "samples"
         index_entry.name = "Epigenomics Samples and Runs"
         index_entry.info = "Search of sequencing runs and samples"
         index_entry.maintainer = "ODS"

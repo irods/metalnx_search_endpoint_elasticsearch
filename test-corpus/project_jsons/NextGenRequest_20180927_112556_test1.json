@@ -21,5 +21,6 @@
   "PILab": "goose labs",
   "RequesterName": "Test1, Name",
   "RequesterEmail": "test1@institute.com",
-  "RequesterID": "test1"
+  "RequesterID": "test1",
+  "url": "http://localhost:8888/metalnx/collections?path=/commonsDevZone/home/projects/Test_Short_ProjectID"
 }

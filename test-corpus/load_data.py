@@ -69,7 +69,7 @@ class LoadData:
                 file_path = os.path.join(self.mapping_folder_path, file)
                 with open(file_path) as data:
                     json_data = json.loads(data.read())
-                    self.api.create_index_with_mapping(PROJECT, json_data)
+                    self.api.create_index_with_mapping(SAMPLE, json_data)
 
     def load_index_docs(self):
         """

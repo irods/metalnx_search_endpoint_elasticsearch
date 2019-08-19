@@ -21,5 +21,6 @@
   "PILab": "John labs",
   "RequesterName": "Test, Name",
   "RequesterEmail": "test@institute.com",
-  "RequesterID": "userId1"
+  "RequesterID": "userId1",
+  "url": "http://localhost:8888/metalnx/collections?path=/commonsDevZone/home/projects/Short_ProjectID"
 }

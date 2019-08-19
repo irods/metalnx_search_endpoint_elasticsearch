@@ -3,7 +3,8 @@ import six
 import logging
 
 from swagger_server.models.search_data import SearchData  # noqa: E501
-from swagger_server import util
+from swagger_server.services.grid_search.generic_search import GenericSearch
+from werkzeug.exceptions import BadRequest
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -26,6 +27,14 @@ def generic_search(index_name, search_query):  # noqa: E501
     :rtype: SearchData
     """
     logger.debug('search_controller: generic_search()')
-    logger.debug('args: \n index_name: %s \n search_query: %s' % (index_name, search_query))
-    result = SearchData()
-    return result
+    if index_name is not None and search_query is not None:
+        logger.debug('args: \n index_name: %s \n search_query: %s' % (index_name, search_query))
+        gs = GenericSearch()
+        search_dsl = gs.generate_generic_dsl(search_query)
+        logger.debug("search_dsl:: %s" % search_dsl)
+
+        if len(search_dsl) > 0:
+            result = gs.generic_search(index_name, search_dsl)
+            return result
+        else:
+            raise BadRequest("Bad Request: Invalid search query")

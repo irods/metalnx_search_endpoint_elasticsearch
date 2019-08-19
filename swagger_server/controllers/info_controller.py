@@ -41,10 +41,10 @@ def get_index_search_attributes(index_name):  # noqa: E501
     logger.debug('info_controller: get_index_search_attributes()')
     logger.debug('args: \n index: %s' % index_name)
 
-    if index_name == 'EpigenomicsProjects':
+    if index_name == 'projects':
         search_attributes = ProjectIndexAttributes()
         return search_attributes.search_attributes()
-    elif index_name == 'EpigenomicsSamples':
+    elif index_name == 'samples':
         search_attributes = SampleIndexAttributes()
         return search_attributes.search_attributes()
     else:
