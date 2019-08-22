@@ -5,6 +5,8 @@ from swagger_server.api import APIUtils
 from swagger_server.models.index_schema_description import IndexSchemaDescription
 from swagger_server.models.search_data import SearchData
 from swagger_server.models.search_data_search_result import SearchDataSearchResult
+from swagger_server.services.grid_search.project_index_attributes import ProjectIndexAttributes
+from swagger_server.services.grid_search.sample_index_attributes import SampleIndexAttributes
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -16,9 +18,6 @@ logger = logging.getLogger(__name__)
 PROJECT_INDEX = 'projects'
 SAMPLE_INDEX = 'samples'
 
-# ToDo: get this terms dynamically by making api call to ES
-PROJECT_INDEXED_TERMS = ['ProjectID', 'ASPNumber', 'IRBNumber', 'ProjectNumber', 'ProjectTitle']
-
 
 class GenericSearch:
     """
@@ -27,6 +26,8 @@ class GenericSearch:
 
     def __init__(self):
         self.api = APIUtils()
+        self.project_Indexed_terms = self.get_index_serach_attribute_list(PROJECT_INDEX)
+        self.sample_Indexed_terms = self.get_index_serach_attribute_list(SAMPLE_INDEX)
 
     @staticmethod
     def generate_generic_dsl(generic_search):
@@ -45,7 +46,23 @@ class GenericSearch:
         return dsl_json
 
     @staticmethod
-    def extract_project_data(data):
+    def get_index_serach_attribute_list(index_name):
+        search_attributes = None
+        search_attribute_list = []
+        if index_name == PROJECT_INDEX:
+            search_attributes = ProjectIndexAttributes().search_attributes()
+
+        elif index_name == SAMPLE_INDEX:
+            search_attributes = SampleIndexAttributes().search_attributes()
+        if search_attributes is not None:
+            attributes = search_attributes.attributes
+            for entry in attributes:
+                search_attribute_list.append(entry.attrib_name)
+            return search_attribute_list
+        else:
+            return None
+
+    def extract_project_data(self, data):
         if len(data) > 0:
             project_details = data["_source"]
             if project_details["ProjectTitle"] is not None:
@@ -58,10 +75,11 @@ class GenericSearch:
                 url_link = None
 
             content_text = ''
-            for term in PROJECT_INDEXED_TERMS:
-                if project_details[term] is not None:
-                    content_text = content_text + term + ': ' + project_details[term] + ', '
-            content_text = content_text.rstrip(', ')
+            for term in self.project_Indexed_terms:
+                if term in project_details:
+                    if project_details[term] is not None:
+                        content_text = content_text + term + ': ' + project_details[term] + ', '
+                content_text = content_text.rstrip(', ')
             return SearchDataSearchResult(title=title, url_link=url_link, content_text=content_text)
 
     def generic_search(self, index_name, dsl_query):
@@ -79,7 +97,7 @@ class GenericSearch:
         try:
             if index_name == PROJECT_INDEX:
                 index_descp = IndexSchemaDescription(
-                    id='Projects',
+                    id='projects',
                     name='Epigenomics Projects',
                     info='Search of project request information, hypothesis, purpose, etc. as entered during the '
                          'project approval phase',
