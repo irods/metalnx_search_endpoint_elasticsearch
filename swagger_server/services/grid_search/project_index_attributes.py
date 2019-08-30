@@ -12,7 +12,7 @@ class ProjectIndexAttributes:
         :return: searchAttributes
         """
         result = SearchAttributes()
-        result.id = 'EpigenomicsProjects'
+        result.id = 'projects'
         result.info = 'Projects indexed from Epigenomics core'
         result.name = 'Epigenomics Projects'
         result.attributes = []
