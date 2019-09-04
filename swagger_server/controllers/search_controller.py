@@ -26,15 +26,24 @@ def generic_search(index_name, search_query):  # noqa: E501
 
     :rtype: SearchData
     """
+
+    # TODO: this is a bit weird but is supposed to represent a translation from
+    # generic index name and ES index name. For now they are the same
+
+    if index_name == "projects":
+        my_index_name = "projects"
+    else:
+        my_index_name = "samples"
+
     logger.debug('search_controller: generic_search()')
-    if index_name is not None and search_query is not None:
-        logger.debug('args: \n index_name: %s \n search_query: %s' % (index_name, search_query))
+    if my_index_name is not None and search_query is not None:
+        logger.debug('args: \n index_name: %s \n search_query: %s' % (my_index_name, search_query))
         gs = GenericSearch()
         search_dsl = gs.generate_generic_dsl(search_query)
         logger.debug("search_dsl:: %s" % search_dsl)
 
         if len(search_dsl) > 0:
-            result = gs.generic_search(index_name, search_dsl)
+            result = gs.generic_search(my_index_name, search_dsl)
             return result
         else:
             raise BadRequest("Bad Request: Invalid search query")

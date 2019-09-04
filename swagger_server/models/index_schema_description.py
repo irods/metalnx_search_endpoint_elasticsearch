@@ -14,11 +14,13 @@ class IndexSchemaDescription(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, info: str=None, version: str=None):  # noqa: E501
+    def __init__(self, id: str=None, es_id: str=None, name: str=None, info: str=None, version: str=None):  # noqa: E501
         """IndexSchemaDescription - a model defined in Swagger
 
         :param id: The id of this IndexSchemaDescription.  # noqa: E501
         :type id: str
+        :param es_id: The es_id of this IndexSchemaDescription.  # noqa: E501
+        :type es_id: str
         :param name: The name of this IndexSchemaDescription.  # noqa: E501
         :type name: str
         :param info: The info of this IndexSchemaDescription.  # noqa: E501
@@ -28,6 +30,7 @@ class IndexSchemaDescription(Model):
         """
         self.swagger_types = {
             'id': str,
+            'es_id': str,
             'name': str,
             'info': str,
             'version': str
@@ -35,11 +38,13 @@ class IndexSchemaDescription(Model):
 
         self.attribute_map = {
             'id': 'id',
+            'es_id': 'es_id',
             'name': 'name',
             'info': 'info',
             'version': 'version'
         }
         self._id = id
+        self._es_id = es_id
         self._name = name
         self._info = info
         self._version = version
@@ -77,6 +82,29 @@ class IndexSchemaDescription(Model):
         """
 
         self._id = id
+
+    @property
+    def es_id(self) -> str:
+        """Gets the es_id of this IndexSchemaDescription.
+
+        elastic search schema mapped by this grid search id  # noqa: E501
+
+        :return: The es_id of this IndexSchemaDescription.
+        :rtype: str
+        """
+        return self._es_id
+
+    @es_id.setter
+    def es_id(self, es_id: str):
+        """Sets the es_id of this IndexSchemaDescription.
+
+        elastic search schema mapped by this grid search id  # noqa: E501
+
+        :param es_id: The es_id of this IndexSchemaDescription.
+        :type es_id: str
+        """
+
+        self._es_id = es_id
 
     @property
     def name(self) -> str:

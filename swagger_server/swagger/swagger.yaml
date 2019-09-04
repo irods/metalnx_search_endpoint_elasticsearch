@@ -10,7 +10,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0-oas3
 servers:
-- url: http://localhost:8082/v1
+- url: http://localhost:8080/v1
   description: Local dev server
 security:
 - BearerAuth:
@@ -71,14 +71,18 @@ paths:
       description: Returns result hits with associated fields and values
       operationId: generic_search
       parameters:
-      - in: query
-        name: index_name
+      - name: index_name
+        in: query
         required: true
+        style: form
+        explode: true
         schema:
           type: string
-      - in: query
-        name: search_query
+      - name: search_query
+        in: query
         required: true
+        style: form
+        explode: true
         schema:
           type: string
       responses:
@@ -89,7 +93,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/search_data'
       x-openapi-router-controller: swagger_server.controllers.search_controller
-
 components:
   schemas:
     indexes:
@@ -139,6 +142,9 @@ components:
         id:
           type: string
           description: Unique identifier for this index type
+        es_id:
+          type: string
+          description: elastic search schema mapped by this grid search id
         name:
           type: string
           description: Display name for this index type
@@ -215,32 +221,113 @@ components:
         attrib_type: date
         info: info
     search_data:
-      type: "object"
+      type: object
       properties:
         index-schema-description:
           $ref: '#/components/schemas/index-schema-description'
         search_result:
           type: array
           items:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Descriptive title for search result
-              url_link:
-                type: string
-                description: Resolvable https link to result data location
-              content_text:
-                type: string
-                description: Bag of attribute-value  metadata pairs attached to search hit
-
-          example:
-            title: descriptive title
-            url_link: https://hostname.com/path/to/data
-            content_text: "attribute_1:value_1,attribute_2:value_2,..."
+            $ref: '#/components/schemas/search_data_search_result'
+      example:
+        index-schema-description:
+          name: name
+          id: id
+          version: version
+          info: info
+        search_result:
+        - url_link: url_link
+          subtitle: subtitle
+          content_text: content_text
+          links:
+            linkset_title: linkset_title
+            links:
+            - link_url: link_url
+              link_text: link_text
+            - link_url: link_url
+              link_text: link_text
+            linkset_description: linkset_description
+          title: title
+        - url_link: url_link
+          subtitle: subtitle
+          content_text: content_text
+          links:
+            linkset_title: linkset_title
+            links:
+            - link_url: link_url
+              link_text: link_text
+            - link_url: link_url
+              link_text: link_text
+            linkset_description: linkset_description
+          title: title
+    search_data_linkset:
+      type: object
+      properties:
+        linkset_title:
+          type: string
+          description: User friendly title for a link set
+        linkset_description:
+          type: string
+          description: Text description of a link set
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/search_data_linkset_links'
+      example:
+        linkset_title: linkset_title
+        links:
+        - link_url: link_url
+          link_text: link_text
+        - link_url: link_url
+          link_text: link_text
+        linkset_description: linkset_description
+    search_data_search_result:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Descriptive title for search result
+        url_link:
+          type: string
+          description: Resolvable https link to result data location
+        subtitle:
+          type: string
+          description: Optional subtitle that can be presented as a highlight, publication
+            info, etc
+        content_text:
+          type: string
+          description: Bag of attribute-value paired metadata attached to search hit
+        links:
+          $ref: '#/components/schemas/search_data_linkset'
+      example:
+        url_link: url_link
+        subtitle: subtitle
+        content_text: content_text
+        links:
+          linkset_title: linkset_title
+          links:
+          - link_url: link_url
+            link_text: link_text
+          - link_url: link_url
+            link_text: link_text
+          linkset_description: linkset_description
+        title: title
+    search_data_linkset_links:
+      type: object
+      properties:
+        link_text:
+          type: string
+          description: Text for the link
+        link_url:
+          type: string
+          description: URL for the link
+      example:
+        link_url: link_url
+        link_text: link_text
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_bearer_auth
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_BearerAuth
+

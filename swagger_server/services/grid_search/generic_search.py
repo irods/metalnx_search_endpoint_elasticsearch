@@ -2,6 +2,7 @@ import json
 import logging
 
 from swagger_server.api import APIUtils
+from swagger_server.models.search_data_linkset import SearchDataLinkset, SearchDataLinksetLinks
 from swagger_server.models.index_schema_description import IndexSchemaDescription
 from swagger_server.models.search_data import SearchData
 from swagger_server.models.search_data_search_result import SearchDataSearchResult
@@ -65,22 +66,31 @@ class GenericSearch:
     def extract_project_data(self, data):
         if len(data) > 0:
             project_details = data["_source"]
-            if project_details["ProjectTitle"] is not None:
-                title = project_details["ProjectTitle"]
+
+            if project_details["ProjectNumber"] is not None:
+                title = project_details["ProjectNumber"]
             else:
                 title = None
+
+            if project_details["ProjectTitle"] is not None:
+                subtitle = project_details["ProjectTitle"]
+            else:
+                subtitle = None
+
             if project_details["url"] is not None:
                 url_link = project_details["url"]
             else:
                 url_link = None
 
-            content_text = ''
-            for term in self.project_Indexed_terms:
-                if term in project_details:
-                    if project_details[term] is not None:
-                        content_text = content_text + term + ': ' + project_details[term] + ', '
-                content_text = content_text.rstrip(', ')
-            return SearchDataSearchResult(title=title, url_link=url_link, content_text=content_text)
+            content_text = project_details["Hypothesis"]
+
+            link = SearchDataLinksetLinks(link_text="NS00045", link_url="http://example.com/NS00045")
+            links = [link]
+
+            sublinks = SearchDataLinkset(linkset_title="Assays", linkset_description="Project datasets from assays", links=links)
+
+            return SearchDataSearchResult(title=title, subtitle=subtitle,
+                                          url_link=url_link, content_text=content_text, sublinks=sublinks)
 
     def generic_search(self, index_name, dsl_query):
         """
@@ -98,6 +108,7 @@ class GenericSearch:
             if index_name == PROJECT_INDEX:
                 index_descp = IndexSchemaDescription(
                     id='projects',
+                    es_id = 'projects',
                     name='Epigenomics Projects',
                     info='Search of project request information, hypothesis, purpose, etc. as entered during the '
                          'project approval phase',

@@ -15,7 +15,7 @@ https://connexion.readthedocs.io/en/latest/security.html
 """
 
 
-def check_bearer_auth(token):
+def check_BearerAuth(token):
     logger.debug('authorization_controller: check_bearer_auth()')
     logger.debug('args: \n token %s' % token)
     grid_auth_util = GridAuthUtil()

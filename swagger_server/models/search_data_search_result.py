@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.search_data_linkset import SearchDataLinkset  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,30 +15,40 @@ class SearchDataSearchResult(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, title: str=None, url_link: str=None, content_text: str=None):  # noqa: E501
+    def __init__(self, title: str=None, url_link: str=None, subtitle: str=None, content_text: str=None, links: SearchDataLinkset=None):  # noqa: E501
         """SearchDataSearchResult - a model defined in Swagger
 
         :param title: The title of this SearchDataSearchResult.  # noqa: E501
         :type title: str
         :param url_link: The url_link of this SearchDataSearchResult.  # noqa: E501
         :type url_link: str
+        :param subtitle: The subtitle of this SearchDataSearchResult.  # noqa: E501
+        :type subtitle: str
         :param content_text: The content_text of this SearchDataSearchResult.  # noqa: E501
         :type content_text: str
+        :param links: The links of this SearchDataSearchResult.  # noqa: E501
+        :type links: SearchDataLinkset
         """
         self.swagger_types = {
             'title': str,
             'url_link': str,
-            'content_text': str
+            'subtitle': str,
+            'content_text': str,
+            'links': SearchDataLinkset
         }
 
         self.attribute_map = {
             'title': 'title',
             'url_link': 'url_link',
-            'content_text': 'content_text'
+            'subtitle': 'subtitle',
+            'content_text': 'content_text',
+            'links': 'links'
         }
         self._title = title
         self._url_link = url_link
+        self._subtitle = subtitle
         self._content_text = content_text
+        self._links = links
 
     @classmethod
     def from_dict(cls, dikt) -> 'SearchDataSearchResult':
@@ -97,10 +108,33 @@ class SearchDataSearchResult(Model):
         self._url_link = url_link
 
     @property
+    def subtitle(self) -> str:
+        """Gets the subtitle of this SearchDataSearchResult.
+
+        Optional subtitle that can be presented as a highlight, publication info, etc  # noqa: E501
+
+        :return: The subtitle of this SearchDataSearchResult.
+        :rtype: str
+        """
+        return self._subtitle
+
+    @subtitle.setter
+    def subtitle(self, subtitle: str):
+        """Sets the subtitle of this SearchDataSearchResult.
+
+        Optional subtitle that can be presented as a highlight, publication info, etc  # noqa: E501
+
+        :param subtitle: The subtitle of this SearchDataSearchResult.
+        :type subtitle: str
+        """
+
+        self._subtitle = subtitle
+
+    @property
     def content_text(self) -> str:
         """Gets the content_text of this SearchDataSearchResult.
 
-        Bag of attribute-value  metadata pairs attached to search hit  # noqa: E501
+        Bag of attribute-value paired metadata attached to search hit  # noqa: E501
 
         :return: The content_text of this SearchDataSearchResult.
         :rtype: str
@@ -111,10 +145,31 @@ class SearchDataSearchResult(Model):
     def content_text(self, content_text: str):
         """Sets the content_text of this SearchDataSearchResult.
 
-        Bag of attribute-value  metadata pairs attached to search hit  # noqa: E501
+        Bag of attribute-value paired metadata attached to search hit  # noqa: E501
 
         :param content_text: The content_text of this SearchDataSearchResult.
         :type content_text: str
         """
 
         self._content_text = content_text
+
+    @property
+    def links(self) -> SearchDataLinkset:
+        """Gets the links of this SearchDataSearchResult.
+
+
+        :return: The links of this SearchDataSearchResult.
+        :rtype: SearchDataLinkset
+        """
+        return self._links
+
+    @links.setter
+    def links(self, links: SearchDataLinkset):
+        """Sets the links of this SearchDataSearchResult.
+
+
+        :param links: The links of this SearchDataSearchResult.
+        :type links: SearchDataLinkset
+        """
+
+        self._links = links

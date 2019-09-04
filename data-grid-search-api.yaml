@@ -1,117 +1,270 @@
 openapi: 3.0.0
 info:
-  description: "This is and extensible, pluggable search API for iRODS focused on pluggable Elastic Search indexes."
-  version: "1.0.0-oas3"
-  title: "Data Grid Search API"
+  title: Data Grid Search API
+  description: This is and extensible, pluggable search API for iRODS focused on pluggable
+    Elastic Search indexes.
   contact:
-    email: "mike.conway@nih.gov"
+    email: mike.conway@nih.gov
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0-oas3
 servers:
-  - url: http://localhost:8080/v1
-    description: Local dev server
+- url: http://localhost:8080/v1
+  description: Local dev server
 security:
-  - BearerAuth:
-      - read
-      - write
+- BearerAuth:
+  - read
+  - write
 tags:
-- name: "Info"
-  description: "Endpoints for describing search capabilities and options"
-- name: "Search"
-  description: "Generic search on indexes"
+- name: Info
+  description: Endpoints for describing search capabilities and options
+- name: Search
+  description: Search on index
 paths:
   /indexes:
     get:
       tags:
-      - "Info"
-      summary: "Find index types supported by this api"
-      description: "Returns a summary list of the search indexes available at this endpoint"
-      operationId: "get_indexes"
+      - Info
+      summary: Find index types supported by this api
+      description: Returns a summary list of the search indexes available at this
+        endpoint
+      operationId: get_indexes
       parameters: []
       responses:
-        '200':
-          description: "Successfully retrieved"
+        200:
+          description: Successfully retrieved
           content:
-              application/json:
-                schema:
-                    $ref: "#/components/schemas/indexes"
+            application/json:
+              schema:
+                $ref: '#/components/schemas/indexes'
+      x-openapi-router-controller: swagger_server.controllers.info_controller
+  /attributes/{index_name}:
+    get:
+      tags:
+      - Info
+      summary: Find search attribute terms for a specific index
+      description: Returns a list of search attribute terms available for specified
+        index
+      operationId: get_index_search_attributes
+      parameters:
+      - name: index_name
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchAttributes'
+      x-openapi-router-controller: swagger_server.controllers.info_controller
+  /search:
+    post:
+      tags:
+      - Search
+      summary: Generic search on one or all available indexes
+      description: Returns result hits with associated fields and values
+      operationId: generic_search
+      parameters:
+      - in: query
+        name: index_name
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: search_query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successfully retrieved search result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/search_data'
+      x-openapi-router-controller: swagger_server.controllers.search_controller
+
 components:
-  securitySchemes:
-        BearerAuth:
-          type: http
-          scheme: bearer
-          bearerFormat: JWT 
   schemas:
     indexes:
-      type: "object"
+      type: object
       properties:
         id:
-          type: "string"
-          description: "Unique id that identifies this particular endpoint. Multiple endpoints may be configured to create a search cluster to address distinct indexes"
-        name: 
-          type: "string"
-          description: "Human readable, meaningful name for the search endpoint"
+          type: string
+          description: Unique id that identifies this particular endpoint. Multiple
+            endpoints may be configured to create a search cluster to address distinct
+            indexes
+        name:
+          type: string
+          description: Human readable, meaningful name for the search endpoint
         info:
-          type: "string"
-          description: "Documentation about the function of the endpoint"  
+          type: string
+          description: Documentation about the function of the endpoint
         maintainer:
-          type: "string"
-          description: "Maintainer of the api"
+          type: string
+          description: Maintainer of the api
         contact_email:
-          type: "string"
-          description: "email address of a support contact"  
-          format: "email"
+          type: string
+          description: email address of a support contact
+          format: email
         indexes:
-          type: "array"
-          description: "individually addressable indexes supported by this endpoint"
+          type: array
+          description: individually addressable indexes supported by this endpoint
           items:
-            $ref: "#/components/schemas/index-schema-description"
+            $ref: '#/components/schemas/index-schema-description'
+      example:
+        indexes:
+        - name: name
+          id: id
+          version: version
+          info: info
+        - name: name
+          id: id
+          version: version
+          info: info
+        name: name
+        id: id
+        maintainer: maintainer
+        info: info
+        contact_email: ""
     index-schema-description:
       type: object
       properties:
         id:
+          type: string
+          description: Unique identifier for this index type
+        es_id:
           type: "string"
-          description: "Unique identifier for this index type"
+          description: "elastic search schema mapped by this grid search id"
         name:
-          type: "string"
-          description: "Display name for this index type"
+          type: string
+          description: Display name for this index type
         info:
-          type: "string"
-          description: "Documentation about this particular index type"
+          type: string
+          description: Documentation about this particular index type
         version:
-          type: "string"
-          description: "Version identifier for this endpoint, preferably in semantic versioning style"
-    index:
-      type: "object"
+          type: string
+          description: Version identifier for this endpoint, preferably in semantic
+            versioning style
+      example:
+        name: name
+        id: id
+        version: version
+        info: info
+    searchAttributes:
+      type: object
       properties:
         id:
-          type: "string"
-          description: "Unique identifier for this index type"
+          type: string
+          description: Unique identifier for this index type
         name:
-          type: "string"
-          description: "Display name for this index type"
+          type: string
+          description: Display name for this index type
         info:
-          type: "string"
-          description: "Documentation about this particular index type"
+          type: string
+          description: Documentation about this particular index type
         attributes:
-          type: "array"
-          description: "array of possible search attributes that can be used to support textual advanced search flags as well as
-          query builder interfaces attribute-by-attribute"
+          type: array
+          description: array of possible search attributes that can be used to support
+            textual advanced search flags as well as query builder interfaces attribute-by-attribute
           items:
-            properties: 
-              attrib_name:
-                type: "string"
-                description: "attribute name as defined in the base search schema"
-              attrib_type:
+            $ref: '#/components/schemas/index-search-attributes'
+      example:
+        name: name
+        attributes:
+        - shortcut_text: shortcut_text
+          attrib_name: attrib_name
+          attrib_type: date
+          info: info
+        - shortcut_text: shortcut_text
+          attrib_name: attrib_name
+          attrib_type: date
+          info: info
+        id: id
+        info: info
+    index-search-attributes:
+      type: object
+      properties:
+        attrib_name:
+          type: string
+          description: attribute name as defined in the base search schema
+        attrib_type:
+          type: string
+          description: cue for the type of search attribute in the underlying schema
+          enum:
+          - date
+          - string
+          - int
+          - float
+          - boolean
+        info:
+          type: string
+          description: Documentation about the use of the given search type
+        shortcut_text:
+          type: string
+          description: Text shortcut suitable for use in free text advanced search
+            operations, such that Author:XXXX would cause a specific search on the
+            author information in the target index, if not specified it defaults to
+            the attrib_name
+      example:
+        shortcut_text: shortcut_text
+        attrib_name: attrib_name
+        attrib_type: date
+        info: info
+
+    search_data:
+      type: "object"
+      properties:
+        index-schema-description:
+          $ref: '#/components/schemas/index-schema-description'
+        search_result:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
                 type: string
-                enum: [date, string, int, float, boolean]
-                description: "cue for the type of search attribute in the underlying schema"
-              info:
-                type: "string"
-                description: "Documentation about the use of the given search type"
-              shortcut_text:
-                type: "string"
-                description: "Text shortcut suitable for use in free text advanced search operations, such that
-                Author:XXXX would cause a specific search on the author information in the target index, if not specified it
-                defaults to the attrib_name"
+                description: Descriptive title for search result
+              url_link:
+                type: string
+                description: Resolvable https link to result data location
+              subtitle:
+                type: string
+                description: Optional subtitle that can be presented as a highlight, publication info, etc
+              content_text:
+                type: string
+                description: Bag of attribute-value paired metadata attached to search hit
+              links:
+                $ref: '#/components/schemas/search_data_linkset'
+    search_data_linkset:
+      type: "object"
+      properties:
+        linkset_title:
+          type: string
+          description: User friendly title for a link set
+        linkset_description:
+          type: string
+          description: Text description of a link set
+        links:
+          type: array
+          items:
+            type: object
+            properties:
+              link_text:
+                type: string
+                description: Text for the link
+              link_url:
+                type: string
+                description: URL for the link
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_bearer_auth
