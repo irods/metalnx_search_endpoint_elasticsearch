@@ -90,7 +90,7 @@ class GenericSearch:
             sublinks = SearchDataLinkset(linkset_title="Assays", linkset_description="Project datasets from assays", links=links)
 
             return SearchDataSearchResult(title=title, subtitle=subtitle,
-                                          url_link=url_link, content_text=content_text, sublinks=sublinks)
+                                          url_link=url_link, content_text=content_text, links=sublinks)
 
     def generic_search(self, index_name, dsl_query):
         """
