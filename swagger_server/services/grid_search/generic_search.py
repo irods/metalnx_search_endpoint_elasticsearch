@@ -84,8 +84,9 @@ class GenericSearch:
 
             content_text = project_details["Hypothesis"]
 
-            link = SearchDataLinksetLinks(link_text="NS00045", link_url="http://example.com/NS00045")
-            links = [link]
+            links = []
+            links.append(SearchDataLinksetLinks(link_text="NS00045", link_url="http://example.com/NS00045"))
+            links.append(SearchDataLinksetLinks(link_text="NS00000", link_url="http://example.com/NS00000"))
 
             sublinks = SearchDataLinkset(linkset_title="Assays", linkset_description="Project datasets from assays", links=links)
 

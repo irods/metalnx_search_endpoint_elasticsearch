@@ -10,7 +10,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0-oas3
 servers:
-- url: http://localhost:8080/v1
+- url: http://localhost:8082/v1
   description: Local dev server
 security:
 - BearerAuth:

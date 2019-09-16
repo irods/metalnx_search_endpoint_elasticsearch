@@ -23,6 +23,7 @@ def get_indexes():  # noqa: E501
 
     :rtype: Indexes
     """
+    logger.error('info_controller: get_indexes()')
     logger.debug('info_controller: get_indexes()')
     adapter = EpigenomicsSearchAdapter()
     return adapter.describe_index()
