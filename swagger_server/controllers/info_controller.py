@@ -23,7 +23,6 @@ def get_indexes():  # noqa: E501
 
     :rtype: Indexes
     """
-    logger.error('info_controller: get_indexes()')
     logger.debug('info_controller: get_indexes()')
     adapter = EpigenomicsSearchAdapter()
     return adapter.describe_index()
@@ -44,7 +43,6 @@ def get_index_search_attributes(index_name):  # noqa: E501
 
     if index_name == 'projects':
         search_attributes = ProjectIndexAttributes()
-
         return search_attributes.search_attributes()
     elif index_name == 'samples':
         search_attributes = SampleIndexAttributes()
