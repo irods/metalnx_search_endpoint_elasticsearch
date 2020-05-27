@@ -71,18 +71,14 @@ paths:
       description: Returns result hits with associated fields and values
       operationId: generic_search
       parameters:
-      - name: index_name
-        in: query
+      - in: query
+        name: index_name
         required: true
-        style: form
-        explode: true
         schema:
           type: string
-      - name: search_query
-        in: query
+      - in: query
+        name: search_query
         required: true
-        style: form
-        explode: true
         schema:
           type: string
       responses:
@@ -93,6 +89,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/search_data'
       x-openapi-router-controller: swagger_server.controllers.search_controller
+
 components:
   schemas:
     indexes:
@@ -143,8 +140,8 @@ components:
           type: string
           description: Unique identifier for this index type
         es_id:
-          type: string
-          description: elastic search schema mapped by this grid search id
+          type: "string"
+          description: "elastic search schema mapped by this grid search id"
         name:
           type: string
           description: Display name for this index type
@@ -183,11 +180,15 @@ components:
         attributes:
         - shortcut_text: shortcut_text
           attrib_name: attrib_name
+          attrib_example: attrib_example
           attrib_type: date
+          attrib_path: path.to.attrib_name
           info: info
         - shortcut_text: shortcut_text
           attrib_name: attrib_name
+          attrib_example: attrib_example
           attrib_type: date
+          attrib_path: path.to.attrib_name
           info: info
         id: id
         info: info
@@ -206,6 +207,12 @@ components:
           - int
           - float
           - boolean
+        attrib_path:
+          type: string
+          description: Absolute path of the search attribute in nested elastic search indexed document
+        attrib_example:
+          type: string
+          description: example for search attribute
         info:
           type: string
           description: Documentation about the use of the given search type
@@ -218,50 +225,37 @@ components:
       example:
         shortcut_text: shortcut_text
         attrib_name: attrib_name
+        attrib_example: attrib_example
+        attrib_path: path.to.attrib_name
         attrib_type: date
         info: info
+
     search_data:
-      type: object
+      type: "object"
       properties:
         index-schema-description:
           $ref: '#/components/schemas/index-schema-description'
         search_result:
           type: array
           items:
-            $ref: '#/components/schemas/search_data_search_result'
-      example:
-        index-schema-description:
-          name: name
-          id: id
-          version: version
-          info: info
-        search_result:
-        - url_link: url_link
-          subtitle: subtitle
-          content_text: content_text
-          links:
-            linkset_title: linkset_title
-            links:
-            - link_url: link_url
-              link_text: link_text
-            - link_url: link_url
-              link_text: link_text
-            linkset_description: linkset_description
-          title: title
-        - url_link: url_link
-          subtitle: subtitle
-          content_text: content_text
-          links:
-            linkset_title: linkset_title
-            links:
-            - link_url: link_url
-              link_text: link_text
-            - link_url: link_url
-              link_text: link_text
-            linkset_description: linkset_description
-          title: title
+            type: object
+            properties:
+              title:
+                type: string
+                description: Descriptive title for search result
+              url_link:
+                type: string
+                description: Resolvable https link to result data location
+              subtitle:
+                type: string
+                description: Optional subtitle that can be presented as a highlight, publication info, etc
+              content_text:
+                type: string
+                description: Bag of attribute-value paired metadata attached to search hit
+              links:
+                $ref: '#/components/schemas/search_data_linkset'
     search_data_linkset:
-      type: object
+      type: "object"
       properties:
         linkset_title:
           type: string
@@ -272,62 +266,17 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/search_data_linkset_links'
-      example:
-        linkset_title: linkset_title
-        links:
-        - link_url: link_url
-          link_text: link_text
-        - link_url: link_url
-          link_text: link_text
-        linkset_description: linkset_description
-    search_data_search_result:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Descriptive title for search result
-        url_link:
-          type: string
-          description: Resolvable https link to result data location
-        subtitle:
-          type: string
-          description: Optional subtitle that can be presented as a highlight, publication
-            info, etc
-        content_text:
-          type: string
-          description: Bag of attribute-value paired metadata attached to search hit
-        links:
-          $ref: '#/components/schemas/search_data_linkset'
-      example:
-        url_link: url_link
-        subtitle: subtitle
-        content_text: content_text
-        links:
-          linkset_title: linkset_title
-          links:
-          - link_url: link_url
-            link_text: link_text
-          - link_url: link_url
-            link_text: link_text
-          linkset_description: linkset_description
-        title: title
-    search_data_linkset_links:
-      type: object
-      properties:
-        link_text:
-          type: string
-          description: Text for the link
-        link_url:
-          type: string
-          description: URL for the link
-      example:
-        link_url: link_url
-        link_text: link_text
+            type: object
+            properties:
+              link_text:
+                type: string
+                description: Text for the link
+              link_url:
+                type: string
+                description: URL for the link
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_BearerAuth
-
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_bearer_auth

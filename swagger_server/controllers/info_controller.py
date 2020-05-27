@@ -8,7 +8,7 @@ from swagger_server.services.grid_search.sample_index_attributes import SampleIn
 from werkzeug.exceptions import BadRequest
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s: %(filename)s:%(funcName)s:%(lineno)d: %(message)s"
 )
 

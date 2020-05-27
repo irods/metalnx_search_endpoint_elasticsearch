@@ -10,7 +10,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0-oas3
 servers:
-- url: http://localhost:8080/v1
+- url: http://localhost:8082/v1
   description: Local dev server
 security:
 - BearerAuth:
@@ -71,13 +71,13 @@ paths:
       description: Returns result hits with associated fields and values
       operationId: generic_search
       parameters:
-      - in: query
-        name: index_name
+      - name: index_name
+        in: query
         required: true
         schema:
           type: string
-      - in: query
-        name: search_query
+      - name: search_query
+        in: query
         required: true
         schema:
           type: string
@@ -140,8 +140,8 @@ components:
           type: string
           description: Unique identifier for this index type
         es_id:
-          type: "string"
-          description: "elastic search schema mapped by this grid search id"
+          type: string
+          description: elastic search schema mapped by this grid search id
         name:
           type: string
           description: Display name for this index type
@@ -180,11 +180,15 @@ components:
         attributes:
         - shortcut_text: shortcut_text
           attrib_name: attrib_name
+          attrib_example: attrib_example
           attrib_type: date
+          attrib_path: path.to.attrib_name
           info: info
         - shortcut_text: shortcut_text
           attrib_name: attrib_name
+          attrib_example: attrib_example
           attrib_type: date
+          attrib_path: path.to.attrib_name
           info: info
         id: id
         info: info
@@ -203,6 +207,12 @@ components:
           - int
           - float
           - boolean
+        attrib_path:
+          type: string
+          description: Absolute path of the search attribute in nested elastic search indexed document
+        attrib_example:
+          type: string
+          description: example for search attribute
         info:
           type: string
           description: Documentation about the use of the given search type
@@ -215,6 +225,8 @@ components:
       example:
         shortcut_text: shortcut_text
         attrib_name: attrib_name
+        attrib_example: attrib_example
+        attrib_path: path.to.attrib_name
         attrib_type: date
         info: info
 

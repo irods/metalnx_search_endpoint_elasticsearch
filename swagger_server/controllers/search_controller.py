@@ -7,7 +7,7 @@ from swagger_server.services.grid_search.generic_search import GenericSearch
 from werkzeug.exceptions import BadRequest
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s: %(filename)s:%(funcName)s:%(lineno)d: %(message)s"
 )
 
@@ -32,15 +32,17 @@ def generic_search(index_name, search_query):  # noqa: E501
 
     if index_name == "projects":
         my_index_name = "projects"
-    else:
+    elif index_name == "samples":
         my_index_name = "samples"
+    else:
+        raise BadRequest("Bad Request: Invalid search index")
 
     logger.debug('search_controller: generic_search()')
     if my_index_name is not None and search_query is not None:
-        logger.debug('args: \n index_name: %s \n search_query: %s' % (my_index_name, search_query))
+        logger.info('args: \n index_name: %s \n search_query: %s' % (my_index_name, search_query))
         gs = GenericSearch()
-        search_dsl = gs.generate_generic_dsl(search_query)
-        logger.debug("search_dsl:: %s" % search_dsl)
+        search_dsl = gs.generate_generic_dsl(my_index_name, search_query)
+        logger.info("ES_DSL:: %s" % search_dsl)
 
         if len(search_dsl) > 0:
             result = gs.generic_search(my_index_name, search_dsl)

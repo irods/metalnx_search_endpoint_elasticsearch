@@ -4,6 +4,7 @@ import logging
 
 from werkzeug.exceptions import Unauthorized
 from jose import JWTError, jwt
+from swagger_server.api import api_utils
 
 """
 util to to handle auth operation described at:
@@ -11,7 +12,7 @@ https://connexion.readthedocs.io/en/latest/security.html
 """
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s: %(filename)s:%(funcName)s:%(lineno)d: %(message)s"
 )
 
@@ -20,10 +21,11 @@ logger = logging.getLogger(__name__)
 
 class GridAuthUtil:
     def __init__(self):
-        self.jwt_issuer = 'gov.nih.niehs'
-        self.jwt_secret = 'thisisasecretthatisverysecretyouwillneverguessthiskey'
-        self.jwt_lifetime_seconds = 600
-        self.jwt_algorithm = 'HS384'
+        self.search_properties = api_utils.load_props()
+        self.jwt_issuer = self.search_properties['jwt.issuer']
+        self.jwt_secret = self.search_properties['jwt.secret']
+        self.jwt_lifetime_seconds = self.search_properties['jwt.lifetime.seconds']
+        self.jwt_algorithm = self.search_properties['jwt.algo']
 
     def check_bearer_auth(self, token):
         logger.debug('GridAuthUtil: check_bearer_auth()')
@@ -50,7 +52,7 @@ class GridAuthUtil:
     def get_secret(user, token_info) -> str:
         logger.debug('GridAuthUtil: get_secret()')
         return '''
-        You are user_id {user} and the secret is 'wbevuec'.
+        You are user_id {user} and the secret is 'xxx'.
         Decoded token claims: {token_info}.
         '''.format(user=user, token_info=token_info)
 

@@ -5,6 +5,7 @@ python-jose[cryptography]
 Flask-RESTful==0.3.6
 flask-testing
 connexion[swagger-ui]
+swagger-ui-bundle>=0.0.2
 requests==2.20.0
 Flask-Cors==3.0.7
 werkzeug==0.15.5
