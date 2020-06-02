@@ -14,6 +14,8 @@ RUN pip3 install connexion[swagger-ui]
 
 COPY . /usr/src/app
 
+ENV SEARCH_PROPERTIES_FILE=/etc/irods-ext/project-and-sample-search.properties
+
 EXPOSE 8080
 
 ENTRYPOINT ["python3"]

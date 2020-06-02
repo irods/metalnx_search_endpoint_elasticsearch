@@ -15,11 +15,13 @@ class Indexes(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, info: str=None, maintainer: str=None, contact_email: str=None, indexes: List[IndexSchemaDescription]=None):  # noqa: E501
+    def __init__(self, id: str=None, es_id: str=None, name: str=None, info: str=None, maintainer: str=None, contact_email: str=None, indexes: List[IndexSchemaDescription]=None):  # noqa: E501
         """Indexes - a model defined in Swagger
 
         :param id: The id of this Indexes.  # noqa: E501
         :type id: str
+        :param es_id: The id of this ES Indexes.  # noqa: E501
+        :type es_id: str
         :param name: The name of this Indexes.  # noqa: E501
         :type name: str
         :param info: The info of this Indexes.  # noqa: E501
@@ -33,6 +35,7 @@ class Indexes(Model):
         """
         self.swagger_types = {
             'id': str,
+            'es_id': str,
             'name': str,
             'info': str,
             'maintainer': str,
@@ -42,6 +45,7 @@ class Indexes(Model):
 
         self.attribute_map = {
             'id': 'id',
+            'es_id': 'es_id',
             'name': 'name',
             'info': 'info',
             'maintainer': 'maintainer',
@@ -49,6 +53,7 @@ class Indexes(Model):
             'indexes': 'indexes'
         }
         self._id = id
+        self._es_id = es_id
         self._name = name
         self._info = info
         self._maintainer = maintainer
@@ -88,6 +93,29 @@ class Indexes(Model):
         """
 
         self._id = id
+
+    @property
+    def es_id(self) -> str:
+        """Gets the es_id of this Indexes.
+
+        Unique es_id that identifies this particular endpoint. Multiple endpoints may be configured to create a search cluster to address distinct indexes  # noqa: E501
+
+        :return: The es_id of this Indexes.
+        :rtype: str
+        """
+        return self._es_id
+
+    @es_id.setter
+    def es_id(self, es_id: str):
+        """Sets the es_id of this Indexes.
+
+        Unique es_id that identifies this particular endpoint. Multiple endpoints may be configured to create a search cluster to address distinct indexes  # noqa: E501
+
+        :param es_id: The es_id of this Indexes.
+        :type es_id: str
+        """
+
+        self._es_id = es_id
 
     @property
     def name(self) -> str:

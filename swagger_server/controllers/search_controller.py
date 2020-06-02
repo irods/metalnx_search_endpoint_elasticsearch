@@ -30,10 +30,8 @@ def generic_search(index_name, search_query):  # noqa: E501
     # TODO: this is a bit weird but is supposed to represent a translation from
     # generic index name and ES index name. For now they are the same
 
-    if index_name == "projects":
-        my_index_name = "projects"
-    elif index_name == "samples":
-        my_index_name = "samples"
+    if index_name == "metadata":
+        my_index_name = "metadata"
     else:
         raise BadRequest("Bad Request: Invalid search index")
 

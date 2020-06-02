@@ -1,0 +1,28 @@
+{
+  "url": "https://example.com/metalnx/collections?path=/tempZone/home/test1/foo.txt",
+  "zoneName":"tempZone",
+  "absolutePath": "/tempZone/home/test1/foo.txt",
+  "fileName": "foo.txt",
+  "parentPath": "/tempZone/home/test1",
+  "isFile": true,
+  "dataSize": 140,
+  "mimeType": "text/plain",
+  "lastModifiedDate": "1590781330",
+  "metadataEntries": [
+    {
+      "attribute": "a1",
+      "value": "v1",
+      "unit": "u1"
+    },
+    {
+      "attribute": "a2",
+      "value": "v2",
+      "unit": "u2"
+    },
+    {
+      "attribute": "a3",
+      "value": "v3",
+      "unit": "u3"
+    }
+  ]
+}
