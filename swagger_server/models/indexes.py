@@ -15,7 +15,9 @@ class Indexes(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, es_id: str=None, name: str=None, info: str=None, maintainer: str=None, contact_email: str=None, indexes: List[IndexSchemaDescription]=None):  # noqa: E501
+
+    def __init__(self, id: str = None, es_id: str = None, name: str = None, info: str = None, maintainer: str = None,
+                 contact_email: str = None, indexes: List[IndexSchemaDescription] = None):  # noqa: E501
         """Indexes - a model defined in Swagger
 
         :param id: The id of this Indexes.  # noqa: E501

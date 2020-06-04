@@ -14,7 +14,9 @@ class IndexSearchAttributes(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, attrib_name: str=None, attrib_type: str=None, attrib_path: str=None, attrib_example: str=None, info: str=None, shortcut_text: str=None):  # noqa: E501
+
+    def __init__(self, attrib_name: str = None, attrib_type: str = None, attrib_path: str = None,
+                 attrib_example: str = None, info: str = None, shortcut_text: str = None):  # noqa: E501
         """IndexSearchAttributes - a model defined in Swagger
 
         :param attrib_name: The attrib_name of this IndexSearchAttributes.  # noqa: E501
@@ -112,7 +114,7 @@ class IndexSearchAttributes(Model):
         if attrib_type not in allowed_values:
             raise ValueError(
                 "Invalid value for `attrib_type` ({0}), must be one of {1}"
-                .format(attrib_type, allowed_values)
+                    .format(attrib_type, allowed_values)
             )
 
         self._attrib_type = attrib_type

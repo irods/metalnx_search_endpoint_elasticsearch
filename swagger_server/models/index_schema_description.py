@@ -14,7 +14,9 @@ class IndexSchemaDescription(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, es_id: str=None, name: str=None, info: str=None, version: str=None):  # noqa: E501
+
+    def __init__(self, id: str = None, es_id: str = None, name: str = None, info: str = None,
+                 version: str = None):  # noqa: E501
         """IndexSchemaDescription - a model defined in Swagger
 
         :param id: The id of this IndexSchemaDescription.  # noqa: E501

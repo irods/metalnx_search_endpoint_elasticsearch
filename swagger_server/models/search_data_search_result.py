@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.result_properties import ResultProperties  # noqa: F401,E501
 from swagger_server.models.search_data_linkset import SearchDataLinkset  # noqa: F401,E501
 from swagger_server import util
 
@@ -15,7 +16,9 @@ class SearchDataSearchResult(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, title: str=None, url_link: str=None, subtitle: str=None, content_text: str=None, links: SearchDataLinkset=None):  # noqa: E501
+
+    def __init__(self, title: str = None, url_link: str = None, subtitle: str = None, content_text: str = None,
+                 properties: ResultProperties = None, links: SearchDataLinkset = None):  # noqa: E501
         """SearchDataSearchResult - a model defined in Swagger
 
         :param title: The title of this SearchDataSearchResult.  # noqa: E501
@@ -26,6 +29,8 @@ class SearchDataSearchResult(Model):
         :type subtitle: str
         :param content_text: The content_text of this SearchDataSearchResult.  # noqa: E501
         :type content_text: str
+        :param properties: The properties of this SearchDataSearchResult.  # noqa: E501
+        :type properties: ResultProperties
         :param links: The links of this SearchDataSearchResult.  # noqa: E501
         :type links: SearchDataLinkset
         """
@@ -34,6 +39,7 @@ class SearchDataSearchResult(Model):
             'url_link': str,
             'subtitle': str,
             'content_text': str,
+            'properties': ResultProperties,
             'links': SearchDataLinkset
         }
 
@@ -42,12 +48,14 @@ class SearchDataSearchResult(Model):
             'url_link': 'url_link',
             'subtitle': 'subtitle',
             'content_text': 'content_text',
+            'properties': 'properties',
             'links': 'links'
         }
         self._title = title
         self._url_link = url_link
         self._subtitle = subtitle
         self._content_text = content_text
+        self._properties = properties
         self._links = links
 
     @classmethod
@@ -152,6 +160,27 @@ class SearchDataSearchResult(Model):
         """
 
         self._content_text = content_text
+
+    @property
+    def properties(self) -> ResultProperties:
+        """Gets the properties of this SearchDataSearchResult.
+
+
+        :return: The properties of this SearchDataSearchResult.
+        :rtype: ResultProperties
+        """
+        return self._properties
+
+    @properties.setter
+    def properties(self, properties: ResultProperties):
+        """Sets the properties of this SearchDataSearchResult.
+
+
+        :param properties: The properties of this SearchDataSearchResult.
+        :type properties: ResultProperties
+        """
+
+        self._properties = properties
 
     @property
     def links(self) -> SearchDataLinkset:

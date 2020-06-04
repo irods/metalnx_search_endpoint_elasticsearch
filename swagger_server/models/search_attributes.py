@@ -15,7 +15,9 @@ class SearchAttributes(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, info: str=None, attributes: List[IndexSearchAttributes]=None):  # noqa: E501
+
+    def __init__(self, id: str = None, name: str = None, info: str = None,
+                 attributes: List[IndexSearchAttributes] = None):  # noqa: E501
         """SearchAttributes - a model defined in Swagger
 
         :param id: The id of this SearchAttributes.  # noqa: E501

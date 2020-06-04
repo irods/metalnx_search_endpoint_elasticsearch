@@ -252,8 +252,30 @@ components:
               content_text:
                 type: string
                 description: Bag of attribute-value paired metadata attached to search hit
+              properties:
+                $ref: '#/components/schemas/result_properties'
               links:
                 $ref: '#/components/schemas/search_data_linkset'
+    result_properties:
+      type: object
+      properties:
+        propertyset_title:
+          type: string
+          description: User friendly title for property set
+        propertyset_description:
+          type: string
+          description: Text description of a property set
+        propertySet:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: name of the result property
+              value:
+                type: string
+                description: value of the result property
     search_data_linkset:
       type: "object"
       properties:

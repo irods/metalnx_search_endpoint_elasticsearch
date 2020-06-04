@@ -14,7 +14,8 @@ class SearchDataLinksetLinks(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, link_text: str=None, link_url: str=None):  # noqa: E501
+
+    def __init__(self, link_text: str = None, link_url: str = None):  # noqa: E501
         """SearchDataLinksetLinks - a model defined in Swagger
 
         :param link_text: The link_text of this SearchDataLinksetLinks.  # noqa: E501
