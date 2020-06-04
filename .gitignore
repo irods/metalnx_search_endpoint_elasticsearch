@@ -64,7 +64,7 @@ Thumbs.db
 **/node_modules
 
 # python virtualenvs
-
+.python-version
 search_rest_api/swagger_server/bin
 pip-selfcheck.json
 pyvenv.cfg

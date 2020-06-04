@@ -16,7 +16,9 @@ class SearchData(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, index_schema_description: IndexSchemaDescription=None, search_result: List[SearchDataSearchResult]=None):  # noqa: E501
+
+    def __init__(self, index_schema_description: IndexSchemaDescription = None,
+                 search_result: List[SearchDataSearchResult] = None):  # noqa: E501
         """SearchData - a model defined in Swagger
 
         :param index_schema_description: The index_schema_description of this SearchData.  # noqa: E501

@@ -1,3 +1,5 @@
+import os
+
 import requests
 import sys
 import logging
@@ -11,11 +13,22 @@ logger = logging.getLogger(__name__)
 
 
 class APIUtils:
+
+    search_properties_env_variable = "SEARCH_PROPERTIES_FILE"
+
     """
     util class to handle all API calls
     """
     def __init__(self):
-        self.baseurl = 'http://localhost:9200'
+
+        """
+        Inspect for a SEARCH_PROPERTIES_FILE environment variable and error if not found. This props file
+        contains the information necessary to connect to Elasticsearch and to handle JWT security.
+
+        See the sample_search_properties.properties file for expected settings
+        """
+        self.search_properties = load_props()
+        self.baseurl = self.search_properties["es.baseurl"]
         self.session = requests.Session()
 
     def setup(self, base_url):
@@ -87,3 +100,35 @@ class APIUtils:
         url = self.baseurl + '/' + index_name + '/_doc/' + id
         response = self.post(url, json_obj)
         return response
+
+
+def load_props():
+    """return a dictionary of properties file values specfied by the SEARCH_PROPERTIES_FILE environment variable"""
+    logging.info("dict_from_props()")
+
+    filename = os.environ[APIUtils.search_properties_env_variable]
+    logging.info("filename: %s" % filename)
+
+    myprops = {}
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                line = line.strip()  # removes trailing whitespace and '\n' chars
+
+                if "=" not in line: continue  # skips blanks and comments w/o =
+                if line.startswith("#"): continue  # skips comments which contain =
+
+                k, v = line.split("=", 1)
+                myprops[k] = v
+            return myprops
+    except Exception:
+        logging.error("cannot find properties file indicated by SEARCH_PROPERTIES_FILE")
+        raise ConfigurationError
+
+
+class ConfigurationError(Exception):
+    """Raised when the configuration properties are unavailable"""
+    pass
+
+
+

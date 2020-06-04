@@ -32,7 +32,7 @@ paths:
       operationId: get_indexes
       parameters: []
       responses:
-        200:
+        "200":
           description: Successfully retrieved
           content:
             application/json:
@@ -56,7 +56,7 @@ paths:
         schema:
           type: string
       responses:
-        200:
+        "200":
           description: Successfully retrieved
           content:
             application/json:
@@ -86,7 +86,7 @@ paths:
         schema:
           type: string
       responses:
-        200:
+        "200":
           description: Successfully retrieved search result
           content:
             application/json:
@@ -183,11 +183,15 @@ components:
         attributes:
         - shortcut_text: shortcut_text
           attrib_name: attrib_name
+          attrib_example: attrib_example
           attrib_type: date
+          attrib_path: path.to.attrib_name
           info: info
         - shortcut_text: shortcut_text
           attrib_name: attrib_name
+          attrib_example: attrib_example
           attrib_type: date
+          attrib_path: path.to.attrib_name
           info: info
         id: id
         info: info
@@ -206,6 +210,13 @@ components:
           - int
           - float
           - boolean
+        attrib_path:
+          type: string
+          description: Absolute path of the search attribute in nested elastic search
+            indexed document
+        attrib_example:
+          type: string
+          description: example for search attribute
         info:
           type: string
           description: Documentation about the use of the given search type
@@ -218,6 +229,8 @@ components:
       example:
         shortcut_text: shortcut_text
         attrib_name: attrib_name
+        attrib_example: attrib_example
+        attrib_path: path.to.attrib_name
         attrib_type: date
         info: info
     search_data:
@@ -248,6 +261,14 @@ components:
               link_text: link_text
             linkset_description: linkset_description
           title: title
+          properties:
+            propertyset_description: propertyset_description
+            propertySet:
+            - name: name
+              value: value
+            - name: name
+              value: value
+            propertyset_title: propertyset_title
         - url_link: url_link
           subtitle: subtitle
           content_text: content_text
@@ -260,6 +281,35 @@ components:
               link_text: link_text
             linkset_description: linkset_description
           title: title
+          properties:
+            propertyset_description: propertyset_description
+            propertySet:
+            - name: name
+              value: value
+            - name: name
+              value: value
+            propertyset_title: propertyset_title
+    result_properties:
+      type: object
+      properties:
+        propertyset_title:
+          type: string
+          description: User friendly title for property set
+        propertyset_description:
+          type: string
+          description: Text description of a property set
+        propertySet:
+          type: array
+          items:
+            $ref: '#/components/schemas/result_properties_propertySet'
+      example:
+        propertyset_description: propertyset_description
+        propertySet:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        propertyset_title: propertyset_title
     search_data_linkset:
       type: object
       properties:
@@ -297,6 +347,8 @@ components:
         content_text:
           type: string
           description: Bag of attribute-value paired metadata attached to search hit
+        properties:
+          $ref: '#/components/schemas/result_properties'
         links:
           $ref: '#/components/schemas/search_data_linkset'
       example:
@@ -312,6 +364,26 @@ components:
             link_text: link_text
           linkset_description: linkset_description
         title: title
+        properties:
+          propertyset_description: propertyset_description
+          propertySet:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          propertyset_title: propertyset_title
+    result_properties_propertySet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of the result property
+        value:
+          type: string
+          description: value of the result property
+      example:
+        name: name
+        value: value
     search_data_linkset_links:
       type: object
       properties:
@@ -329,5 +401,5 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_BearerAuth
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_bearer_auth
 

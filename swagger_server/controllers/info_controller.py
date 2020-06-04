@@ -1,14 +1,13 @@
 import logging
 
-from swagger_server.services.grid_search.epigenomics_search_adapter import EpigenomicsSearchAdapter
+from swagger_server.services.grid_search.search_adapter import SearchAdapter
 from swagger_server.models.indexes import Indexes  # noqa: E501
 from swagger_server.models.search_attributes import SearchAttributes  # noqa: E501
-from swagger_server.services.grid_search.project_index_attributes import ProjectIndexAttributes
-from swagger_server.services.grid_search.sample_index_attributes import SampleIndexAttributes
+from swagger_server.services.grid_search.metadata_index_attributes import MetadataIndexAttributes
 from werkzeug.exceptions import BadRequest
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s: %(filename)s:%(funcName)s:%(lineno)d: %(message)s"
 )
 
@@ -24,7 +23,7 @@ def get_indexes():  # noqa: E501
     :rtype: Indexes
     """
     logger.debug('info_controller: get_indexes()')
-    adapter = EpigenomicsSearchAdapter()
+    adapter = SearchAdapter()
     return adapter.describe_index()
 
 
@@ -41,11 +40,8 @@ def get_index_search_attributes(index_name):  # noqa: E501
     logger.debug('info_controller: get_index_search_attributes()')
     logger.debug('args: \n index: %s' % index_name)
 
-    if index_name == 'projects':
-        search_attributes = ProjectIndexAttributes()
-        return search_attributes.search_attributes()
-    elif index_name == 'samples':
-        search_attributes = SampleIndexAttributes()
+    if index_name == 'metadata':
+        search_attributes = MetadataIndexAttributes()
         return search_attributes.search_attributes()
     else:
         raise BadRequest('Error: Index not found')

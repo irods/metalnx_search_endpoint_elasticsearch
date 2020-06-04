@@ -15,7 +15,9 @@ class SearchDataLinkset(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, linkset_title: str=None, linkset_description: str=None, links: List[SearchDataLinksetLinks]=None):  # noqa: E501
+
+    def __init__(self, linkset_title: str = None, linkset_description: str = None,
+                 links: List[SearchDataLinksetLinks] = None):  # noqa: E501
         """SearchDataLinkset - a model defined in Swagger
 
         :param linkset_title: The linkset_title of this SearchDataLinkset.  # noqa: E501
