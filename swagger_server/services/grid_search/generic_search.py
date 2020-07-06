@@ -75,11 +75,11 @@ class GenericSearch:
         # escape special characters in search query
         generic_search = generic_search.replace('/', '//')
         search_attrib_list = re.findall(SEARCH_ATTRIBUTES_PATTERN, generic_search)
+        terms_with_abs_path = []
 
         for term in search_attrib_list:
             logger.info('term: %s' % term)
             temp = term[:-1]
-            logger.info('temp %s' % temp)
             if index_name == METADATA_INDEX:
                 search_index_dict = self.metadata_Indexed_terms
                 logger.info('search_index_dict:')
@@ -89,8 +89,12 @@ class GenericSearch:
                 logger.error('Error: Index not matched')
             if temp in search_index_dict:
                 abs_path = '__' + search_index_dict[temp]
-                logger.info('abs_path: %s ' % abs_path)
-                generic_search = generic_search.replace(temp, abs_path)
+                if temp not in terms_with_abs_path:
+                    generic_search = generic_search.replace(temp, abs_path)
+                    terms_with_abs_path.append(temp)
+                else:
+                    logger.info('Absolute path already added for term: %s' % temp)
+        logger.info('updated generic search: %s' % generic_search)
 
         if index_name == METADATA_INDEX:
             bool_condition = "must"
@@ -98,7 +102,6 @@ class GenericSearch:
             nested = ''
             non_nested = ''
             for item in subquery:
-                logger.info('item path:: %s' % item)
                 if 'metadataEntries' in item:
                     nested = nested + item + ' '
                 else:
@@ -112,6 +115,9 @@ class GenericSearch:
             if nested == '':
                 nested = non_nested
                 bool_condition = "should"
+            logger.info('non_nested query: %s' % non_nested)
+            logger.info('nested query: %s' % nested)
+            logger.info('boolean condition: %s' % bool_condition)
 
             dsl_json = {
                 "query": {
