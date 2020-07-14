@@ -1,0 +1,72 @@
+version: '3'
+services:
+
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - 4-2_irodsnet
+  es02:
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+      container_name: es02
+      environment:
+        - node.name=es02
+        - discovery.seed_hosts=es01
+        - cluster.initial_master_nodes=es01,es02
+        - cluster.name=docker-cluster
+        - bootstrap.memory_lock=true
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
+      volumes:
+        - esdata02:/usr/share/elasticsearch/data
+      networks:
+        - 4-2_irodsnet
+  metadata_search:
+    container_name: metadata_search
+    image: metadata-search:latest
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    depends_on:
+      - es01
+      - es02
+    environment:
+      - "SEARCH_PROPERTIES_FILE=/etc/irods-ext/metadata-search.properties"
+    volumes:
+      - ${METADATA_IRODS_EXT_LOCATION}:/etc/irods-ext:ro
+    ports:
+      - "8082:8082"
+    networks:
+      - 4-2_irodsnet
+
+volumes:
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
+
+networks:
+   4-2_irodsnet:
+    external: true
+     
+
+
+  
