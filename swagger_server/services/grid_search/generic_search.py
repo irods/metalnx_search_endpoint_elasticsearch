@@ -196,7 +196,7 @@ class GenericSearch:
             if mime_type is not None:
                 content_text += '<b>MimeType: </b>' + mime_type + '<br>'
             if last_mod_date is not None:
-                content_text += '<b>Modified: </b>' + last_mod_date + '<br>'
+                content_text += '<b>Modified: </b>' + str(last_mod_date) + '<br>'
             if size is not None:
                 content_text += '<b>Size: </b>' + str(size) + 'kB <br>'
 
