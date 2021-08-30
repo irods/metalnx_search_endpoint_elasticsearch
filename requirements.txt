@@ -1,4 +1,4 @@
-connexion == 2.2.0
+connexion >= 2.2.0
 python_dateutil == 2.6.0
 setuptools >= 21.0.0
 python-jose[cryptography]
@@ -9,3 +9,4 @@ swagger-ui-bundle>=0.0.2
 requests==2.20.0
 Flask-Cors==3.0.9
 werkzeug==0.15.5
+jsonschema>=3.2.0
