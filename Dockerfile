@@ -1,16 +1,16 @@
-FROM python:3-alpine
-
-RUN apk add build-base
-RUN apk add libffi-dev
-RUN apk add libressl-dev
+FROM python:3
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY requirements.txt /usr/src/app/
 
-RUN pip3 install --no-cache-dir -r requirements.txt
-RUN pip3 install connexion[swagger-ui]
+RUN apt update
+RUN apt install -y python3 python3-pip
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
+
+#RUN python3 -m pip install connexion[swagger-ui]
 
 COPY . /usr/src/app
 
