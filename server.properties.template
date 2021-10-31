@@ -1,0 +1,6 @@
+es.baseurl=http://localhost:9200
+jwt.issuer=issuer
+jwt.secret=secretsecretsecretsecretsecretsecretsecretsecret
+jwt.lifetime.seconds=600
+jwt.algo=HS384
+project.url.prefix=deprecated
