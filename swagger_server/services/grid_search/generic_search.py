@@ -52,7 +52,10 @@ class GenericSearch:
                 )
                 result = SearchData(index_schema_description=index_descp, search_result=[])
                 hits = es_json.pop("hits")
-                total_hits = hits.get('total', {}).get('value')
+                try:
+                    total_hits = hits.get('total', {}).get('value')  # ES7+
+                except AttributeError:
+                    total_hits = hits.get('total')                   # ES6
                 if total_hits > 0:
                     logger.info("Total number of hits:: %d" % total_hits)
                     hits_list = hits.pop("hits")
