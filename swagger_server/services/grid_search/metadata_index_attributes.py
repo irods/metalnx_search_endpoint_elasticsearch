@@ -48,14 +48,6 @@ class MetadataIndexAttributes:
                 shortcut_text='dataSize'
             ),
             IndexSearchAttributes(
-                attrib_name='isFile',
-                attrib_path='isFile',
-                attrib_type='Boolean',
-                attrib_example='True',
-                info='Is it file',
-                shortcut_text='isFile'
-            ),
-            IndexSearchAttributes(
                 attrib_name='mimeType',
                 attrib_path='mimeType',
                 attrib_type='String',
